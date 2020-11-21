@@ -1,3 +1,8 @@
+# 注意!!!
+我(com.hjhjw1991.www)魔改过, 以下为原仓库readme, 不一定有效
+
+---
+
 图挂了可以看这里：https://www.jianshu.com/p/e2eb509b04e7
 
 # 前言

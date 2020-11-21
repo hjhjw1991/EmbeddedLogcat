@@ -1,40 +1,37 @@
-package com.madchan.comp.logcat
+package com.hjhjw1991.barney.logcat
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
-import android.widget.*
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_logcat.*
 
 /**
  * 日志输出页面
+ * todo 颜色区分不同日志
  */
 class LogcatActivity : AppCompatActivity() {
 
-    private lateinit var process: Spinner
-    private lateinit var level: Spinner
-    private lateinit var search: EditText
-
-    private lateinit var scroller: ScrollView
-    private lateinit var content: TextView
-
     private var command = Command()
-    private var processMap = HashMap<String, Int>()
+    private var processMap: Map<String, Int> = mutableMapOf()
 
     /** 支持自动滚动到底部 */
     private var supportFullScroll = true
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logcat)
 
         processMap = ProcessUtil.getProcessNames(this)
 
-        process = findViewById(R.id.process)
         process.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, android.R.id.text1, ArrayList<String>(processMap.keys))
         process.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
@@ -50,7 +47,6 @@ class LogcatActivity : AppCompatActivity() {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
 
-        level = findViewById(R.id.level)
         level.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
@@ -73,7 +69,6 @@ class LogcatActivity : AppCompatActivity() {
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
 
-        search = findViewById(R.id.search)
         search.addTextChangedListener (object : TextWatcher{
 
             override fun afterTextChanged(s: Editable?) {
@@ -87,20 +82,18 @@ class LogcatActivity : AppCompatActivity() {
 
         })
 
-        scroller = findViewById(R.id.scroller)
-        scroller.setOnTouchListener(OnTouchListener { view, motionEvent ->
+        scroller.setOnTouchListener { _, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> supportFullScroll = false //查看日志时停止自动滚动到底部
             }
             false
-        })
-        content = findViewById(R.id.content)
+        }
 
-        findViewById<ImageView>(R.id.clear).setOnClickListener {
+        clear.setOnClickListener {
             content.text = ""
             LogcatExecutor.clear()
         }
-        findViewById<ImageView>(R.id.scroll_to_end).setOnClickListener{
+        scroll_to_end.setOnClickListener{
             scroller.fullScroll(ScrollView.FOCUS_DOWN)
             supportFullScroll = true
         }
@@ -127,5 +120,4 @@ class LogcatActivity : AppCompatActivity() {
         super.onPause()
         LogcatExecutor.stopOutput()
     }
-
 }

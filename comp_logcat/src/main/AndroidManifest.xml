@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.madchan.comp.logcat">
+    package="com.hjhjw1991.barney.logcat">
 
     <application>
         <activity android:name=".LogcatActivity"

@@ -1,4 +1,4 @@
-package com.madchan.embeddedlogcat
+package com.hjhjw1991.barney
 
 import android.app.Service
 import android.content.Intent

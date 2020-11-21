@@ -1,4 +1,4 @@
-package com.madchan.comp.logcat
+package com.hjhjw1991.barney.logcat
 
 import android.text.TextUtils
 

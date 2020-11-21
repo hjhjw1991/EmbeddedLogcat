@@ -1,21 +1,25 @@
-package com.madchan.embeddedlogcat
+package com.hjhjw1991.barney
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.madchan.comp.logcat.LogcatActivity
+import com.hjhjw1991.barney.logcat.LogcatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        findViewById<View>(R.id.textView).setOnClickListener{
+        start_service.setOnClickListener {
             startActivity(Intent(this, LogcatActivity::class.java))
             startService(Intent(this, RemoteService::class.java))
         }
+
+        textView.apply { text = "click to open logcat activity" }
+            .setOnClickListener {
+                startActivity(Intent(this, LogcatActivity::class.java))
+            }
 
         var i = 0
         Thread{

@@ -1,4 +1,4 @@
-package com.madchan.comp.logcat
+package com.hjhjw1991.barney.logcat
 
 import android.os.Handler
 import android.os.HandlerThread
@@ -26,8 +26,8 @@ object LogcatExecutor {
     }
 
     fun startOutput(command: Command, callback: Callback) {
-        this.command = command
-        this.callback = callback
+        LogcatExecutor.command = command
+        LogcatExecutor.callback = callback
         handler.startOutputThread()
     }
 
